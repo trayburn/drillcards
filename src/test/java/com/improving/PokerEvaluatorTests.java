@@ -6,16 +6,81 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PokerEvaluatorTests {
 
-    // High Card
-    // Pair
-    // Three of a Kind
-    // Two Pair
-    // Straight
-    // Flush
-    // Full House
-    // Four of a Kind
-    // Straight Flush
-    // Royal Flush
+
+    @Test
+    public void Compare_Should_Recognize_Equality_On_RoyalFlush_With_Different_Suits() {
+        // Arrange
+        var xHand = new Card[]{
+                new Card(Faces.Ace, Suits.Spades),
+                new Card(Faces.King, Suits.Spades),
+                new Card(Faces.Queen, Suits.Spades),
+                new Card(Faces.Jack, Suits.Spades),
+                new Card(Faces.Ten, Suits.Spades),
+        };
+        var yHand = new Card[]{
+                new Card(Faces.Ace, Suits.Clubs),
+                new Card(Faces.King, Suits.Clubs),
+                new Card(Faces.Queen, Suits.Clubs),
+                new Card(Faces.Jack, Suits.Clubs),
+                new Card(Faces.Ten, Suits.Clubs),
+        };
+
+        // Act
+        var result = new PokerEvaluator().compare(xHand, yHand);
+
+        // Assert
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void Compare_Should_Recognize_HighCard_Difference() {
+        // Arrange
+        var xHand = new Card[]{
+                new Card(Faces.Ace, Suits.Spades),
+                new Card(Faces.Ten, Suits.Spades),
+                new Card(Faces.Two, Suits.Spades),
+                new Card(Faces.Three, Suits.Spades),
+                new Card(Faces.Five, Suits.Clubs),
+        };
+        var yHand = new Card[]{
+                new Card(Faces.King, Suits.Spades),
+                new Card(Faces.Ten, Suits.Spades),
+                new Card(Faces.Two, Suits.Spades),
+                new Card(Faces.Three, Suits.Spades),
+                new Card(Faces.Five, Suits.Clubs),
+        };
+
+        // Act
+        var result = new PokerEvaluator().compare(xHand, yHand);
+
+        // Assert
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void Compare_Should_Recognize_Equality() {
+        // Arrange
+        var xHand = new Card[]{
+                new Card(Faces.Ace, Suits.Spades),
+                new Card(Faces.Ten, Suits.Spades),
+                new Card(Faces.Two, Suits.Spades),
+                new Card(Faces.Three, Suits.Spades),
+                new Card(Faces.Five, Suits.Spades),
+        };
+        var yHand = new Card[]{
+                new Card(Faces.Ace, Suits.Spades),
+                new Card(Faces.Ten, Suits.Spades),
+                new Card(Faces.Two, Suits.Spades),
+                new Card(Faces.Three, Suits.Spades),
+                new Card(Faces.Five, Suits.Spades),
+        };
+
+        // Act
+        var result = new PokerEvaluator().compare(xHand, yHand);
+
+        // Assert
+        assertEquals(0, result);
+    }
 
     @Test
     public void Evaluate_Should_Recognize_A_Flush() {
